@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'
 
 const list = [
@@ -12,16 +12,36 @@ const list = [
 
 
 function App() {
-  useEffect(() => { }, [])
+  const [filter, setFilter] = useState('');
 
+  useEffect(() => {
+
+
+
+  }, [])
 
   return (
     <>
       <main>
 
-      </main>
+      <input type="text" placeholder='Filtra' value={filter} onChage={e => setFilter(e.target.value)}/>
+
+
+
+
+        <ul>
+          {
+            list.map((list, index) => (
+              <li key={index}>
+                {list.title},{list.genre}
+
+              </li>
+            ))
+          }
+        </ul>
+      </main >
     </>
   )
 }
 
-export default App  
+export default App
