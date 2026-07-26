@@ -10,20 +10,23 @@ const list = [
   { title: 'Pulp Fiction', genre: 'Thriller' },
 ];
 
-
 function App() {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [filteredList, setFilteredList] = useState(list);
+  const [searchTitle, setSearchTitle] = useState('');
 
-    useEffect(() => {
-      if (selectedGenre === '') {
-        setFilteredList(list);
-      }
-      else {
-        const result = list.filter((movie) => movie.genre === selectedGenre);
-        setFilteredList(result);
-      }
-    }, [selectedGenre]);
+  useEffect(() => {
+    let result = list;
+    if (selectedGenre !== '') {
+      result = result.filter((movie) => movie.genre === selectedGenre);
+    }
+    if (searchTitle !== '') {
+      result = result.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTitle.toLowerCase())
+      );
+    }
+    setFilteredList(result);
+  }, [selectedGenre, searchTitle]);
 
   return (
     <>
@@ -35,6 +38,14 @@ function App() {
           <button onClick={() => setSelectedGenre('Thriller')}>Thriller</button>
           <button onClick={() => setSelectedGenre('Romantico')}>Romantico</button>
           <button onClick={() => setSelectedGenre('Azione')}>Azione</button>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Cerca per titolo..."
+            value={searchTitle}
+            onChange={(e) => setSearchTitle(e.target.value)}
+          />
         </div>
         <p>Genere selezionato: <strong>{selectedGenre || 'Tutti i generi'}</strong></p>
         <ul>
