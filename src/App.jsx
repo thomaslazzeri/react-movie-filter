@@ -12,36 +12,41 @@ const list = [
 
 
 function App() {
-  const [filter, setFilter] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [filteredList, setFilteredList] = useState(list);
 
-  useEffect(() => {
-
-
-
-  }, [])
+    useEffect(() => {
+      if (selectedGenre === '') {
+        setFilteredList(list);
+      }
+      else {
+        const result = list.filter((movie) => movie.genre === selectedGenre);
+        setFilteredList(result);
+      }
+    }, [selectedGenre]);
 
   return (
     <>
       <main>
-
-      <input type="text" placeholder='Filtra' value={filter} onChage={e => setFilter(e.target.value)}/>
-
-
-
-
+        <h2>Filtra Film</h2>
+        <div>
+          <button onClick={() => setSelectedGenre('')}>Tutti</button>
+          <button onClick={() => setSelectedGenre('Fantascienza')}>Fantascienza</button>
+          <button onClick={() => setSelectedGenre('Thriller')}>Thriller</button>
+          <button onClick={() => setSelectedGenre('Romantico')}>Romantico</button>
+          <button onClick={() => setSelectedGenre('Azione')}>Azione</button>
+        </div>
+        <p>Genere selezionato: <strong>{selectedGenre || 'Tutti i generi'}</strong></p>
         <ul>
-          {
-            list.map((list, index) => (
-              <li key={index}>
-                {list.title},{list.genre}
-
-              </li>
-            ))
-          }
+          {filteredList.map((movie, index) => (
+            <li key={index}>
+              <strong>{movie.title}</strong> - {movie.genre}
+            </li>
+          ))}
         </ul>
       </main >
     </>
-  )
+  );
 }
 
 export default App
