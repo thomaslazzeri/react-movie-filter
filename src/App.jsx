@@ -39,8 +39,8 @@ function App() {
           <button onClick={() => setSelectedGenre('Romantico')}>Romantico</button>
           <button onClick={() => setSelectedGenre('Azione')}>Azione</button>
         </div>
-        <div>
-          <input
+        <div >
+          <input className="search"
             type="text"
             placeholder="Cerca per titolo..."
             value={searchTitle}
